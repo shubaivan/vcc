@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class VirtualCard
 {
+    use TimestampableTrait;
+
     /**
      * @var int
      *
@@ -57,32 +59,18 @@ class VirtualCard
     private $amountOnCard;
 
     /**
-     * @var \DateTime
+     * @var User
      *
-     * @ORM\Column(name="created_on", type="datetime")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $createdOn;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updated_on", type="datetimetz")
-     */
-    private $updatedOn;
-
-	/**
-	 * @var User
-	 *
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 */
     private $user;
 
-	/**
-	 * @var array
-	 *
-	 * @ORM\Column(name="purpose_details", type="json_array")
-	 */
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="purpose_details", type="json_array")
+     */
     private $purposeDetails;
 
 
@@ -214,54 +202,6 @@ class VirtualCard
     public function getAmountOnCard()
     {
         return $this->amountOnCard;
-    }
-
-    /**
-     * Set createdOn
-     *
-     * @param \DateTime $createdOn
-     *
-     * @return VirtualCard
-     */
-    public function setCreatedOn($createdOn)
-    {
-        $this->createdOn = $createdOn;
-
-        return $this;
-    }
-
-    /**
-     * Get createdOn
-     *
-     * @return \DateTime
-     */
-    public function getCreatedOn()
-    {
-        return $this->createdOn;
-    }
-
-    /**
-     * Set updatedOn
-     *
-     * @param \DateTime $updatedOn
-     *
-     * @return VirtualCard
-     */
-    public function setUpdatedOn($updatedOn)
-    {
-        $this->updatedOn = $updatedOn;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedOn
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedOn()
-    {
-        return $this->updatedOn;
     }
 
     /**

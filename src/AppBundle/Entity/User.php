@@ -13,6 +13,8 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  */
 class User implements AdvancedUserInterface
 {
+    use TimestampableTrait;
+
     /**
      * @var int
      *
@@ -22,48 +24,33 @@ class User implements AdvancedUserInterface
      */
     private $id;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="username", type="string", length=100)
-	 */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=100)
+     */
     private $username;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="password", type="string", length=100)
-	 */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=100)
+     */
     private $password;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="email", type="string", length=255)
-	 */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
     private $email;
 
-	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(name="is_disabled", type="boolean")
-	 */
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_disabled", type="boolean")
+     */
     private $isDisabled;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="created_on", type="datetime")
-	 */
-    private $createdOn;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="updated_on", type="datetime")
-	 */
-    private $updatedOn;
-
 
     /**
      * Get id
@@ -171,86 +158,38 @@ class User implements AdvancedUserInterface
         return $this->isDisabled;
     }
 
-    /**
-     * Set createdOn
-     *
-     * @param \DateTime $createdOn
-     *
-     * @return User
-     */
-    public function setCreatedOn($createdOn)
+    public function isAccountNonExpired()
     {
-        $this->createdOn = $createdOn;
-
-        return $this;
+        return true;
     }
 
-    /**
-     * Get createdOn
-     *
-     * @return \DateTime
-     */
-    public function getCreatedOn()
+    public function isAccountNonLocked()
     {
-        return $this->createdOn;
+        return true;
     }
 
-    /**
-     * Set updatedOn
-     *
-     * @param \DateTime $updatedOn
-     *
-     * @return User
-     */
-    public function setUpdatedOn($updatedOn)
+    public function isCredentialsNonExpired()
     {
-        $this->updatedOn = $updatedOn;
-
-        return $this;
+        return true;
     }
 
-    /**
-     * Get updatedOn
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedOn()
+    public function isEnabled()
     {
-        return $this->updatedOn;
+        return !$this->isDisabled;
     }
 
-	public function isAccountNonExpired()
-	{
-		return true;
-	}
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
 
-	public function isAccountNonLocked()
-	{
-		return true;
-	}
+    public function getSalt()
+    {
+        return null;
+    }
 
-	public function isCredentialsNonExpired()
-	{
-		return true;
-	}
-
-	public function isEnabled()
-	{
-		return !$this->isDisabled;
-	}
-
-	public function getRoles()
-	{
-		return array('ROLE_USER');
-	}
-
-	public function getSalt()
-	{
-		return null;
-	}
-
-	public function eraseCredentials()
-	{
-		// TODO: Implement eraseCredentials() method.
-	}
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
 }
