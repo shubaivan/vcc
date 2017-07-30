@@ -6,7 +6,7 @@ use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * change `updated_on`
+ * change `updated_on`.
  */
 class Version20170730184110 extends AbstractMigration
 {
@@ -30,7 +30,7 @@ class Version20170730184110 extends AbstractMigration
             $this->addSql('
                 ALTER TABLE users 
                 ALTER updated_on DROP DEFAULT
-                ');
+            ');
         }
     }
 
@@ -55,7 +55,7 @@ class Version20170730184110 extends AbstractMigration
             $this->addSql('
                 ALTER TABLE users 
                 ALTER updated_on DROP DEFAULT
-                ');
+            ');
         }
     }
 }
