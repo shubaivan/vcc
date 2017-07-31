@@ -52,6 +52,13 @@ class User implements AdvancedUserInterface
      */
     private $isDisabled;
 
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="last_login_date", type="datetime", nullable=true)
+	 */
+    private $lastLoginDate;
+
     /**
      * Get id
      *
@@ -157,6 +164,22 @@ class User implements AdvancedUserInterface
     {
         return $this->isDisabled;
     }
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getLastLoginDate()
+	{
+		return $this->lastLoginDate;
+	}
+
+	/**
+	 * @param \DateTime $lastLoginDate
+	 */
+	public function setLastLoginDate($lastLoginDate)
+	{
+		$this->lastLoginDate = $lastLoginDate;
+	}
 
     public function isAccountNonExpired()
     {

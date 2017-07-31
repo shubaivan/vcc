@@ -1,13 +1,85 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Efrito VCC | {{ page_title }}</title>
+
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('plugins/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/animate.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+        <link href="{{ asset('plugins/datepicker/css/bootstrap-datepicker3.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/plugins/chosen/chosen.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/efritodc.css') }}" rel="stylesheet" />
     </head>
-    <body>
-        {% block body %}{% endblock %}
+
+    <body class="top-navigation">
+        <div id="wrapper">
+            <div id="page-wrapper" class="gray-bg">
+                <div class="row border-bottom white-bg">
+                    <nav class="navbar navbar-static-top" role="navigation">
+                        <div class="navbar-header">
+                            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                                <i class="fa fa-reorder"></i>
+                            </button>
+                            <a href="{{ path('dashboard') }}" class="navbar-brand">Efrito VCC</a>
+                        </div>
+                        <div class="navbar-collapse collapse" id="navbar">
+                            <ul class="nav navbar-nav">
+                                <li><a role="button" href="{{ path('dashboard') }}"><i class="fa fa-plus"></i> Dashboard</a></li>
+                            </ul>
+                            <ul class="nav navbar-top-links navbar-right">
+                                <li>
+                                    <a href="{{ path('logout') }}">
+                                        <i class="fa fa-sign-out"></i> Log out
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="wrapper wrapper-content">
+                    <div class="container">
+                        <div class="row wrapper border-bottom white-bg page-heading">
+                            <div class="col-lg-10">
+                                <h2>{{ page_title }}</h2>
+                                {% if page_subtitle is defined %}<h3>{{ page_subtitle }}</h3>{% endif %}
+                            </div>
+                            <div class="col-lg-2"></div>
+                        </div>
+                        {% for msg in app.session.flashBag.get('notice') %}
+                            <div class="alert alert-success">{{ msg }}</div>
+                        {% endfor %}
+                        {% for msg in app.session.flashBag.get('error') %}
+                            <div class="alert alert-danger">{{ msg }}</div>
+                        {% endfor %}
+                        {% block body %}{% endblock %}
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="pull-right">
+                        Last login: {{ app.user.lastLoginDate|date('d.m.Y H:i') }} from {{ app.user.lastLoginIp|default('N/A') }}
+                    </div>
+                    <div>
+                        <strong>Copyright</strong> Efrito &copy; 2010-{{ "now"|date('Y') }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script src="{{ asset('js/jquery-2.1.1.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+        <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+        <script src="{{ asset('js/inspinia.js') }}"></script>
+        <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+        <script src="{{ asset('js/plugins/chosen/chosen.jquery.js') }}"></script>
+        <script src="{{ asset('plugins/datepicker/js/bootstrap-datepicker.js') }}"></script>
+        <script src="{{ asset('js/collection-tools.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

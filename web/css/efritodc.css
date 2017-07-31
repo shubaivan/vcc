@@ -1,0 +1,106 @@
+.login-logo {
+    margin-bottom: 20px;
+}
+
+.page-heading {
+    margin-bottom: 20px;
+}
+
+.buttons-top {
+    margin-bottom: 20px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.pt-10 {
+    padding-top: 10px;
+}
+
+.rates {
+    margin-top: 20px;
+    border: 1px solid #1ab394;
+}
+
+.rates .ibox-title {
+    background-color: #1ab394;
+    border-color: #159279;
+}
+
+.rates.ibox.border-bottom {
+    border-color: #1ab394 !important;
+}
+
+.rates .ibox-title a {
+    color: white;
+}
+
+.rates .room-rate .title {
+    background-color: #1c84c6;
+    color: white;
+}
+
+.rates .room-rate .title small {
+    color: white;
+}
+
+h3 .label, h4 .label {
+    font-size: inherit;
+}
+
+.tourist-details {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+}
+
+.tourist-details .tourist-index {
+    padding-top: 1.7em;
+}
+
+.tourist-details .top-margin {
+    padding-top: 0.5em;
+}
+
+.control-inline {
+    width: auto;
+    display: inline-block;
+}
+
+a.btn.top-margin {
+    margin-top: 2em;
+}
+
+form .top-margin.checkbox {
+    margin-top: 2.3em;
+}
+
+.tbl-margin {
+    background-color: #f6ffe0 !important;
+}
+
+.tbl-commission {
+    background-color: #e6ffec !important;
+}
+
+.header-centered th {
+    text-align: center;
+}
+
+td .list-group {
+    margin-bottom: 0;
+}
+
+tr.not-confirmed, tr.not-confirmed a {
+    color: #ccc;
+    font-style: italic;
+}
+
+tr.not-confirmed a.btn {
+    color: white;
+}
