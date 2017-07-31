@@ -29,7 +29,7 @@ security:
             provider: users
             logout:
                 path: logout
-                target: home
+                target: login
             guard:
                 authenticators:
                     - AppBundle\Security\FormUserAuthenticator
