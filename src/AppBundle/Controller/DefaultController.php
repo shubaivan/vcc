@@ -14,6 +14,6 @@ class DefaultController extends Controller
      */
     public function apiTestAction(Request $request)
     {
-		return new JsonResponse(array('success' => true));
+        return new JsonResponse(['success' => true]);
     }
 }

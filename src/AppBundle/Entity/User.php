@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
- * User
+ * User.
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -46,21 +46,21 @@ class User implements AdvancedUserInterface
     private $email;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="is_disabled", type="boolean")
      */
     private $isDisabled;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="last_login_date", type="datetime", nullable=true)
-	 */
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_login_date", type="datetime", nullable=true)
+     */
     private $lastLoginDate;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -70,7 +70,7 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Set username
+     * Set username.
      *
      * @param string $username
      *
@@ -84,7 +84,7 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Get username
+     * Get username.
      *
      * @return string
      */
@@ -94,7 +94,7 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Set password
+     * Set password.
      *
      * @param string $password
      *
@@ -108,7 +108,7 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Get password
+     * Get password.
      *
      * @return string
      */
@@ -118,7 +118,7 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
      *
@@ -132,7 +132,7 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -142,9 +142,9 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Set isDisabled
+     * Set isDisabled.
      *
-     * @param boolean $isDisabled
+     * @param bool $isDisabled
      *
      * @return User
      */
@@ -156,30 +156,30 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Get isDisabled
+     * Get isDisabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsDisabled()
     {
         return $this->isDisabled;
     }
 
-	/**
-	 * @return \DateTime
-	 */
-	public function getLastLoginDate()
-	{
-		return $this->lastLoginDate;
-	}
+    /**
+     * @return \DateTime
+     */
+    public function getLastLoginDate()
+    {
+        return $this->lastLoginDate;
+    }
 
-	/**
-	 * @param \DateTime $lastLoginDate
-	 */
-	public function setLastLoginDate($lastLoginDate)
-	{
-		$this->lastLoginDate = $lastLoginDate;
-	}
+    /**
+     * @param \DateTime $lastLoginDate
+     */
+    public function setLastLoginDate($lastLoginDate)
+    {
+        $this->lastLoginDate = $lastLoginDate;
+    }
 
     public function isAccountNonExpired()
     {
@@ -203,7 +203,7 @@ class User implements AdvancedUserInterface
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return ['ROLE_USER'];
     }
 
     public function getSalt()

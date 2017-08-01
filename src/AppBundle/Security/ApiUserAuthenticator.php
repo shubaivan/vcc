@@ -17,86 +17,93 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 class ApiUserAuthenticator extends AbstractGuardAuthenticator
 {
-	/**
-	 * @var Router
-	 */
-	private $router;
+    /**
+     * @var Router
+     */
+    private $router;
 
-	/**
-	 * @var UserPasswordEncoder
-	 */
-	private $passwordEncoder;
+    /**
+     * @var UserPasswordEncoder
+     */
+    private $passwordEncoder;
 
-	/**
-	 * LoginController constructor.
-	 *
-	 * @param Router $router
-	 * @param UserPasswordEncoder $passwordEncoder
-	 */
-	public function __construct(Router $router, UserPasswordEncoder $passwordEncoder) {
-		$this->router = $router;
-		$this->passwordEncoder = $passwordEncoder;
-	}
+    /**
+     * LoginController constructor.
+     *
+     * @param Router              $router
+     * @param UserPasswordEncoder $passwordEncoder
+     */
+    public function __construct(Router $router, UserPasswordEncoder $passwordEncoder)
+    {
+        $this->router = $router;
+        $this->passwordEncoder = $passwordEncoder;
+    }
 
-	public function start(Request $request, AuthenticationException $authException = null) {
-		$data = array(
-			'success' => false,
-			'errors' => array('username and/or password parameters are missing or no user found')
-		);
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
+        $data = [
+            'success' => false,
+            'errors' => ['username and/or password parameters are missing or no user found'],
+        ];
 
-		return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
-	}
+        return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
+    }
 
-	public function getCredentials(Request $request) {
-		try {
-			$requestContent = json_decode($request->getContent(), true);
-		} catch (\Exception $e) {
-			throw new CustomUserMessageAuthenticationException('Can not decode request body');
-		}
+    public function getCredentials(Request $request)
+    {
+        try {
+            $requestContent = json_decode($request->getContent(), true);
+        } catch (\Exception $e) {
+            throw new CustomUserMessageAuthenticationException('Can not decode request body');
+        }
 
-		if (isset($requestContent['username']) && isset($requestContent['password'])) {
-			$username = $requestContent['username'];
-			$password = $requestContent['password'];
+        if (isset($requestContent['username']) && isset($requestContent['password'])) {
+            $username = $requestContent['username'];
+            $password = $requestContent['password'];
 
-			return array('username' => $username, 'password' => $password);
-		} else {
-			throw new BadCredentialsException('username and/or password parameter is missing');
-		}
+            return ['username' => $username, 'password' => $password];
+        }
 
-		return null;
-	}
+        throw new BadCredentialsException('username and/or password parameter is missing');
+        return null;
+    }
 
-	public function getUser($credentials, UserProviderInterface $userProvider) {
-		$username = $credentials['username'];
+    public function getUser($credentials, UserProviderInterface $userProvider)
+    {
+        $username = $credentials['username'];
 
-		return $userProvider->loadUserByUsername($username);
-	}
+        return $userProvider->loadUserByUsername($username);
+    }
 
-	public function checkCredentials($credentials, UserInterface $user) {
-		$plainPassword = $credentials['password'];
-		$isPasswordValid = $this->passwordEncoder->isPasswordValid($user, $plainPassword);
+    public function checkCredentials($credentials, UserInterface $user)
+    {
+        $plainPassword = $credentials['password'];
+        $isPasswordValid = $this->passwordEncoder->isPasswordValid($user, $plainPassword);
 
-		if (!$isPasswordValid) {
-			throw new BadCredentialsException('username and/or password is wrong');
-		}
+        if (!$isPasswordValid) {
+            throw new BadCredentialsException('username and/or password is wrong');
+        }
 
-		if (is_a($user, 'AppBundle\Entity\User') && !$user->isEnabled()) {
-			throw new CustomUserMessageAuthenticationException('Account locked. Please contact Efrito service center.');
-		}
+        if (is_a($user, 'AppBundle\Entity\User') && !$user->isEnabled()) {
+            throw new CustomUserMessageAuthenticationException('Account locked. Please contact Efrito service center.');
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public function onAuthenticationFailure(Request $request, AuthenticationException $exception) {
-		return new JsonResponse(array('success' => false, 'errors' => array($exception->getMessage())));
-	}
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    {
+        return new JsonResponse(['success' => false, 'errors' => [$exception->getMessage()]]);
+    }
 
-	public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) {
-		// TODO: Implement onAuthenticationSuccess() method.
-		$s = '';
-	}
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    {
+        // TODO: Implement onAuthenticationSuccess() method.
+        $s = '';
+    }
 
-	public function supportsRememberMe() {
-		return false;
-	}
+    public function supportsRememberMe()
+    {
+        return false;
+    }
 }

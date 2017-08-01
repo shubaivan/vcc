@@ -9,37 +9,39 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateUserCommand extends ContainerAwareCommand
 {
-	protected function configure() {
-		$this
-			->setName('app:create-admin')
-			->setDescription('Creates admin user');
-	}
+    protected function configure()
+    {
+        $this
+            ->setName('app:create-admin')
+            ->setDescription('Creates admin user');
+    }
 
-	protected function execute(InputInterface $input, OutputInterface $output) {
-		$output->writeln('Creating Admin');
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $output->writeln('Creating Admin');
 
-		$username = 'admin';
-		$password = 'admin';
+        $username = 'admin';
+        $password = 'admin';
 
-		$user = new User();
-		$user->setUsername($username);
-		$user->setEmail('admin@mdev.xyz');
-		$user->setIsDisabled(false);
-		$user->setPassword($this->getContainer()->get('security.password_encoder')->encodePassword($user, $password));
-		$user->setCreatedOn(new \DateTime());
-		$user->setUpdatedOn(new \DateTime());
+        $user = new User();
+        $user->setUsername($username);
+        $user->setEmail('admin@mdev.xyz');
+        $user->setIsDisabled(false);
+        $user->setPassword($this->getContainer()->get('security.password_encoder')->encodePassword($user, $password));
+        $user->setCreatedOn(new \DateTime());
+        $user->setUpdatedOn(new \DateTime());
 
-		$orm = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $orm = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-		$currentUsers = $orm->getRepository('AppBundle:User')->findByUsername('admin');
-		foreach ($currentUsers as $cu) {
-			$orm->remove($cu);
-		}
-		$orm->flush();
+        $currentUsers = $orm->getRepository('AppBundle:User')->findByUsername('admin');
+        foreach ($currentUsers as $cu) {
+            $orm->remove($cu);
+        }
+        $orm->flush();
 
-		$orm->persist($user);
-		$orm->flush();
+        $orm->persist($user);
+        $orm->flush();
 
-		$output->writeln('Admin user created. Username: ' . $username . ' Password: ' . $password);
-	}
+        $output->writeln('Admin user created. Username: '.$username.' Password: '.$password);
+    }
 }

@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends Controller
 {
@@ -13,6 +12,6 @@ class DashboardController extends Controller
      */
     public function dashboardAction()
     {
-		return $this->render('dashboard/dashboard.html.twig');
+        return $this->render('dashboard/dashboard.html.twig');
     }
 }

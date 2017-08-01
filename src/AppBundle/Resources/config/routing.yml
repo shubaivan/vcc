@@ -1,0 +1,4 @@
+api_photo:
+    type: rest
+    prefix:   /rest_api
+    resource: "@AppBundle/Controller/Api/CardController.php"
