@@ -40,7 +40,7 @@ class FormUserAuthenticator extends AbstractFormLoginAuthenticator
 
     public function getCredentials(Request $request)
     {
-        if ($request->getMethod() === 'POST' && $request->getPathInfo() === $this->router->generate('login')) {
+        if ($request->getMethod() === 'POST' && $request->getRequestUri() === $this->router->generate('login')) {
             $username = $request->request->get('username');
             $request->getSession()->set(Security::LAST_USERNAME, $username);
 
