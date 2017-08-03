@@ -38,9 +38,9 @@ class VirtualCard
     private $cardType;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="amount", type="decimal", precision=10, scale=8)
+     * @ORM\Column(name="amount", type="decimal", precision=10, scale=3)
      */
     private $amount;
 
@@ -52,26 +52,11 @@ class VirtualCard
     private $effectiveOn;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="amount_on_card", type="decimal", precision=10, scale=8)
+     * @ORM\Column(name="amount_on_card", type="decimal", precision=10, scale=3)
      */
     private $amountOnCard;
-
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="purpose_details", type="json_array")
-     */
-    private $purposeDetails;
 
 
     /**
@@ -135,7 +120,7 @@ class VirtualCard
     /**
      * Set amount
      *
-     * @param string $amount
+     * @param float $amount
      *
      * @return VirtualCard
      */
@@ -149,7 +134,7 @@ class VirtualCard
     /**
      * Get amount
      *
-     * @return string
+     * @return float
      */
     public function getAmount()
     {
@@ -183,7 +168,7 @@ class VirtualCard
     /**
      * Set amountOnCard
      *
-     * @param string $amountOnCard
+     * @param float $amountOnCard
      *
      * @return VirtualCard
      */
@@ -197,58 +182,10 @@ class VirtualCard
     /**
      * Get amountOnCard
      *
-     * @return string
+     * @return float
      */
     public function getAmountOnCard()
     {
         return $this->amountOnCard;
-    }
-
-    /**
-     * Set purposeDetails
-     *
-     * @param array $purposeDetails
-     *
-     * @return VirtualCard
-     */
-    public function setPurposeDetails($purposeDetails)
-    {
-        $this->purposeDetails = $purposeDetails;
-
-        return $this;
-    }
-
-    /**
-     * Get purposeDetails
-     *
-     * @return array
-     */
-    public function getPurposeDetails()
-    {
-        return $this->purposeDetails;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \AppBundle\Entity\User $user
-     *
-     * @return VirtualCard
-     */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 }
