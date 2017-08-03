@@ -8,6 +8,10 @@ imports:
 parameters:
     locale: en
 
+    card_manager:
+        full_amount_days_threshold: 1
+        minimal_amount: 1
+
 framework:
     #esi: ~
     #translator: { fallbacks: ['%locale%'] }
@@ -82,7 +86,3 @@ stof_doctrine_extensions:
 
 nelmio_api_doc:
     name: Efrito VCC API
-
-card_manager:
-    full_amount_days_threshold: 1
-    minimal_amount: 1
