@@ -18,16 +18,11 @@ class CardManager
 
     /**
      * CardManager constructor.
-     * @param integer $minimalAmount1
-     * @param integer $fullAmountDaysThreshold1
+     * @param array $config
      */
-    public function __construct(
-        $minimalAmount1,
-        $fullAmountDaysThreshold1
-    ) {
-        // TODO: Change to values from config.yml
-        $this->minimalAmount = $minimalAmount1;
-        $this->fullAmountDaysThreshold = $fullAmountDaysThreshold1;
+    public function __construct($config) {
+        $this->minimalAmount = $config['minimal_amount'];
+        $this->fullAmountDaysThreshold = $config['full_amount_days_threshold'];
     }
 
     public function getOnCardAmount(\DateTime $effectiveDate, $amount)

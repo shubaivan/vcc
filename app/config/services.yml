@@ -21,7 +21,7 @@ services:
         resource: '../../src/AppBundle/Service'
         public: true
 
-    AppBundle\Service\CardManager: ["%minimal_amount%", "%full_amount_days_threshold%"]
+    AppBundle\Service\CardManager: ["%card_manager%"]
 
 #    app.enett:
 #        class: "%app.service.enett.class%"

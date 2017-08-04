@@ -11,21 +11,46 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/test")
+ * @Route("/api")
  */
 class ApiController extends Controller
 {
     /**
-     * @Route("/", name="api_test")
+     * @Route("/test", name="api_test")
      */
     public function testAction(Request $request)
     {
-        $u = $request->getContent();
-        $enett = $this->get(Enett::class);
+		$requestContent = json_decode($request->getContent(), true);
+		$requestContent = $requestContent['data'];
 
-        $requestContent = json_decode($request->getContent(), true);
-        $virtualCard = new VirtualCardRequest();
-        $cardDetails = $enett->createMultiUseCard($virtualCard);
+		$enett = $this->get(Enett::class);
+        $em = $this->getDoctrine()->getManager();
+        $validator = $this->get('validator');
+
+        // create virual card request
+        $virtualCardRequest = new VirtualCardRequest();
+        $virtualCardRequest->setAmount($requestContent['amount']);
+        $virtualCardRequest->setCurrency($requestContent['currency']);
+        $virtualCardRequest->setEffectiveOn(\DateTime::createFromFormat('Y-m-d', $requestContent['effective_date']));
+        $virtualCardRequest->setPurposeDetails($requestContent['reason']);
+        $virtualCardRequest->setUser($this->getUser());
+        $isValid = $validator->validate($virtualCardRequest);
+
+        if ($isValid->count()) {
+        	$outErrs = array();
+
+        	foreach ($isValid as $err) {
+        		$outErrs[$err->getPropertyPath()][] = $err->getMessage();
+			}
+
+			return new JsonResponse(array('success' => false, 'errors' => $outErrs));
+		}
+
+        $em->persist($virtualCardRequest);
+        $em->flush();
+
+        $cardDetails = $enett->createMultiUseCard($virtualCardRequest);
+        $em->flush();
 
         return new JsonResponse([
             'success' => true,

@@ -65,7 +65,6 @@ class ApiUserAuthenticator extends AbstractGuardAuthenticator
         }
 
         throw new BadCredentialsException('username and/or password parameter is missing');
-        return null;
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
