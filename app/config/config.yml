@@ -83,6 +83,3 @@ stof_doctrine_extensions:
     orm:
         default:
             timestampable: true
-
-nelmio_api_doc:
-    name: Efrito VCC API

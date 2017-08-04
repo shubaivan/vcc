@@ -28,25 +28,25 @@ class VirtualCardRequest
      * @var float
      *
      * @ORM\Column(name="amount", type="decimal", precision=10, scale=3)
-	 * @Assert\NotNull()
-	 * @Assert\GreaterThan(value="0")
+     * @Assert\NotNull()
+     * @Assert\GreaterThan(value="0")
      */
     private $amount;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="currency", type="string", length=4)
-	 * @Assert\NotNull()
-	 */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="currency", type="string", length=4)
+     * @Assert\NotNull()
+     */
     private $currency;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="effective_on", type="datetime")
-	 * @Assert\NotNull()
-	 * @Assert\Date()
+     * @Assert\NotNull()
+     * @Assert\Date()
      */
     private $effectiveOn;
 
@@ -55,7 +55,7 @@ class VirtualCardRequest
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 * @Assert\NotNull()
+     * @Assert\NotNull()
      */
     private $user;
 
@@ -63,22 +63,22 @@ class VirtualCardRequest
      * @var array
      *
      * @ORM\Column(name="purpose_details", type="json_array")
-	 * @Assert\NotNull()
+     * @Assert\NotNull()
      */
     private $purposeDetails;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="provider_request", type="json_array", nullable=true)
-	 */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="provider_request", type="json_array", nullable=true)
+     */
     private $providerRequest;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="provider_response", type="json_array", nullable=true)
-	 */
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="provider_response", type="json_array", nullable=true)
+     */
     private $providerResponse;
 
 
@@ -188,51 +188,51 @@ class VirtualCardRequest
         return $this->user;
     }
 
-	/**
-	 * @return string
-	 */
-	public function getCurrency()
-	{
-		return $this->currency;
-	}
+    /**
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
 
-	/**
-	 * @param string $currency
-	 */
-	public function setCurrency($currency)
-	{
-		$this->currency = $currency;
-	}
+    /**
+     * @param string $currency
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getProviderRequest()
-	{
-		return $this->providerRequest;
-	}
+    /**
+     * @return string
+     */
+    public function getProviderRequest()
+    {
+        return $this->providerRequest;
+    }
 
-	/**
-	 * @param string $providerRequest
-	 */
-	public function setProviderRequest($providerRequest)
-	{
-		$this->providerRequest = $providerRequest;
-	}
+    /**
+     * @param string $providerRequest
+     */
+    public function setProviderRequest($providerRequest)
+    {
+        $this->providerRequest = $providerRequest;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getProviderResponse()
-	{
-		return $this->providerResponse;
-	}
+    /**
+     * @return string
+     */
+    public function getProviderResponse()
+    {
+        return $this->providerResponse;
+    }
 
-	/**
-	 * @param string $providerResponse
-	 */
-	public function setProviderResponse($providerResponse)
-	{
-		$this->providerResponse = $providerResponse;
-	}
+    /**
+     * @param string $providerResponse
+     */
+    public function setProviderResponse($providerResponse)
+    {
+        $this->providerResponse = $providerResponse;
+    }
 }

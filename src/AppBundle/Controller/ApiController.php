@@ -2,14 +2,16 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\VirtualCardRequest;
 use AppBundle\Service\Enett;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/api")
+ * @Route("/test")
  */
 class ApiController extends Controller
 {
@@ -18,13 +20,16 @@ class ApiController extends Controller
      */
     public function testAction(Request $request)
     {
-    	$enett = $this->get(Enett::class);
+        $u = $request->getContent();
+        $enett = $this->get(Enett::class);
 
-    	$cardDetails = $enett->createMultiUseCard();
+        $requestContent = json_decode($request->getContent(), true);
+        $virtualCard = new VirtualCardRequest();
+        $cardDetails = $enett->createMultiUseCard($virtualCard);
 
         return new JsonResponse([
-        	'success' => true,
-			'data' => $cardDetails,
-		]);
+            'success' => true,
+            'data' => $cardDetails,
+        ]);
     }
 }

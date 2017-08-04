@@ -1,6 +1,7 @@
 parameters:
     #parameter_name: value
-
+    app.service.enett.class: AppBundle\Service\Enett
+    app.service.card_manager.class: AppBundle\Service\CardManager
 services:
     _defaults:
         autowire: true
@@ -19,6 +20,19 @@ services:
     AppBundle\Service\:
         resource: '../../src/AppBundle/Service'
         public: true
+
+    AppBundle\Service\CardManager: ["%minimal_amount%", "%full_amount_days_threshold%"]
+
+#    app.enett:
+#        class: "%app.service.enett.class%"
+#        arguments:
+#            - "@app.card_manager"
+#
+#    app.card_manager:
+#        class: "%app.service.card_manager.class%"
+#        arguments:
+#            - "%minimal_amount%"
+#            - "%full_amount_days_threshold%"
 
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
