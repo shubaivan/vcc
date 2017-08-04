@@ -12,10 +12,10 @@ class DashboardController extends Controller
      */
     public function dashboardAction()
     {
-    	$requests = $this->getDoctrine()->getRepository('AppBundle:VirtualCardRequest')->findBy(array(), array('createdOn' => 'DESC'));
+        $requests = $this->getDoctrine()->getRepository('AppBundle:VirtualCardRequest')->findBy(array(), array('createdOn' => 'DESC'));
 
         return $this->render('dashboard/dashboard.html.twig', array(
-        	'vc_requests' => $requests
-		));
+            'vc_requests' => $requests
+        ));
     }
 }

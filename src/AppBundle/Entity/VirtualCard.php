@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="virtual_cards")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\VirtualCardRepository")
  */
-class VirtualCard
+class VirtualCard implements \JsonSerializable
 {
     use TimestampableTrait;
 
@@ -187,5 +187,19 @@ class VirtualCard
     public function getAmountOnCard()
     {
         return $this->amountOnCard;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'amount' => $this->getAmount(),
+            'effective_on' => $this->getEffectiveOn(),
+            'amount_on_card' => $this->getAmountOnCard(),
+            'card_no' => $this->getCardNo(),
+            'card_type' => $this->getCardType(),
+        ];
     }
 }

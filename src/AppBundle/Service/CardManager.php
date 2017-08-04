@@ -20,7 +20,8 @@ class CardManager
      * CardManager constructor.
      * @param array $config
      */
-    public function __construct($config) {
+    public function __construct($config)
+    {
         $this->minimalAmount = $config['minimal_amount'];
         $this->fullAmountDaysThreshold = $config['full_amount_days_threshold'];
     }

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use JMS\Serializer\Annotation;
 
 /**
  * User.
@@ -17,6 +18,10 @@ class User implements AdvancedUserInterface
 
     /**
      * @var int
+     *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id

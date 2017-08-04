@@ -34,7 +34,8 @@
         "doctrine/doctrine-migrations-bundle": "v1.2.1",
         "gedmo/doctrine-extensions": "v2.4.30",
         "stof/doctrine-extensions-bundle": "v1.2.2",
-        "nelmio/api-doc-bundle": "2.x-dev"
+        "nelmio/api-doc-bundle": "2.x-dev",
+        "jms/serializer-bundle": "2.0.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

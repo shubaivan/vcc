@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation;
 
 /**
  * VirtualCardRequest
@@ -11,8 +12,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="virtual_card_requests")
  * @ORM\Entity()
  */
-class VirtualCardRequest
+class VirtualCardRequest implements \JsonSerializable
 {
+    const GROUP_POST = 'post_virtual_card';
+
     use TimestampableTrait;
 
     /**
@@ -27,8 +30,12 @@ class VirtualCardRequest
     /**
      * @var float
      *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
+     *
      * @ORM\Column(name="amount", type="decimal", precision=10, scale=3)
-     * @Assert\NotNull()
+     * @Assert\NotNull(groups={"post_virtual_card"})
      * @Assert\GreaterThan(value="0")
      */
     private $amount;
@@ -36,73 +43,109 @@ class VirtualCardRequest
     /**
      * @var string
      *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
+     *
      * @ORM\Column(name="currency", type="string", length=4)
-     * @Assert\NotNull()
+     * @Assert\NotNull(groups={"post_virtual_card"})
      */
     private $currency;
 
     /**
      * @var \DateTime
      *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
      * @ORM\Column(name="effective_on", type="datetime")
-     * @Assert\NotNull()
-     * @Assert\Date()
+     * @Assert\NotNull(groups={"post_virtual_card"})
+     * @Assert\Date(groups={"post_virtual_card"})
      */
     private $effectiveOn;
 
     /**
      * @var User
      *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
+     * @Annotation\Type("AppBundle\Entity\User")
+     * @Annotation\SerializedName("user")
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * @Assert\NotNull()
+     * @Assert\NotNull(groups={"post_virtual_card"})
      */
     private $user;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="hotel", type="string", length=100)
-	 * @Assert\NotBlank()
-	 */
+    /**
+     * @var string
+     *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
+     *
+     * @ORM\Column(name="hotel", type="string", length=100)
+     * @Assert\NotBlank(groups={"post_virtual_card"})
+     */
     private $hotel;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="hotel_room", type="string", length=100)
-	 * @Assert\NotBlank()
-	 */
+    /**
+     * @var string
+     *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
+     *
+     * @ORM\Column(name="hotel_room", type="string", length=100)
+     * @Assert\NotBlank(groups={"post_virtual_card"})
+     */
     private $hotelRoom;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="tourists", type="string", length=200)
-	 * @Assert\NotBlank()
-	 */
+    /**
+     * @var string
+     *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
+     *
+     * @ORM\Column(name="tourists", type="string", length=200)
+     * @Assert\NotBlank(groups={"post_virtual_card"})
+     */
     private $tourists;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="check_in", type="date")
-	 * @Assert\NotNull()
-	 * @Assert\Date()
-	 */
+    /**
+     * @var \DateTime
+     *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
+     *
+     * @ORM\Column(name="check_in", type="date")
+     * @Assert\NotNull(groups={"post_virtual_card"})
+     * @Assert\Date(groups={"post_virtual_card"})
+     */
     private $checkIn;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="check_out", type="date")
-	 * @Assert\NotNull()
-	 * @Assert\Date()
-	 */
+    /**
+     * @var \DateTime
+     *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
+     *
+     * @ORM\Column(name="check_out", type="date")
+     * @Assert\NotNull(groups={"post_virtual_card"})
+     * @Assert\Date(groups={"post_virtual_card"})
+     */
     private $checkOut;
 
     /**
      * @var string
+     *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
      *
      * @ORM\Column(name="provider_request", type="json_array", nullable=true)
      */
@@ -110,6 +153,10 @@ class VirtualCardRequest
 
     /**
      * @var string
+     *
+     * @Annotation\Groups({
+     *     "post_virtual_card"
+     * })
      *
      * @ORM\Column(name="provider_response", type="json_array", nullable=true)
      */
@@ -246,83 +293,91 @@ class VirtualCardRequest
         $this->providerResponse = $providerResponse;
     }
 
-	/**
-	 * @return string
-	 */
-	public function getHotel()
-	{
-		return $this->hotel;
-	}
+    /**
+     * @return string
+     */
+    public function getHotel()
+    {
+        return $this->hotel;
+    }
 
-	/**
-	 * @param string $hotel
-	 */
-	public function setHotel($hotel)
-	{
-		$this->hotel = $hotel;
-	}
+    /**
+     * @param string $hotel
+     */
+    public function setHotel($hotel)
+    {
+        $this->hotel = $hotel;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getHotelRoom()
-	{
-		return $this->hotelRoom;
-	}
+    /**
+     * @return string
+     */
+    public function getHotelRoom()
+    {
+        return $this->hotelRoom;
+    }
 
-	/**
-	 * @param string $hotelRoom
-	 */
-	public function setHotelRoom($hotelRoom)
-	{
-		$this->hotelRoom = $hotelRoom;
-	}
+    /**
+     * @param string $hotelRoom
+     */
+    public function setHotelRoom($hotelRoom)
+    {
+        $this->hotelRoom = $hotelRoom;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getTourists()
-	{
-		return $this->tourists;
-	}
+    /**
+     * @return string
+     */
+    public function getTourists()
+    {
+        return $this->tourists;
+    }
 
-	/**
-	 * @param string $tourists
-	 */
-	public function setTourists($tourists)
-	{
-		$this->tourists = $tourists;
-	}
+    /**
+     * @param string $tourists
+     */
+    public function setTourists($tourists)
+    {
+        $this->tourists = $tourists;
+    }
 
-	/**
-	 * @return \DateTime
-	 */
-	public function getCheckIn()
-	{
-		return $this->checkIn;
-	}
+    /**
+     * @return \DateTime
+     */
+    public function getCheckIn()
+    {
+        return $this->checkIn;
+    }
 
-	/**
-	 * @param \DateTime $checkIn
-	 */
-	public function setCheckIn($checkIn)
-	{
-		$this->checkIn = $checkIn;
-	}
+    /**
+     * @param \DateTime $checkIn
+     */
+    public function setCheckIn($checkIn)
+    {
+        $this->checkIn = $checkIn;
+    }
 
-	/**
-	 * @return \DateTime
-	 */
-	public function getCheckOut()
-	{
-		return $this->checkOut;
-	}
+    /**
+     * @return \DateTime
+     */
+    public function getCheckOut()
+    {
+        return $this->checkOut;
+    }
 
-	/**
-	 * @param \DateTime $checkOut
-	 */
-	public function setCheckOut($checkOut)
-	{
-		$this->checkOut = $checkOut;
-	}
+    /**
+     * @param \DateTime $checkOut
+     */
+    public function setCheckOut($checkOut)
+    {
+        $this->checkOut = $checkOut;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            "id" => $this->getId(),
+            "amount" => $this->getAmount()
+        ];
+    }
 }
