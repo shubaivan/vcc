@@ -32,7 +32,11 @@ class ApiController extends Controller
         $virtualCardRequest->setAmount($requestContent['amount']);
         $virtualCardRequest->setCurrency($requestContent['currency']);
         $virtualCardRequest->setEffectiveOn(\DateTime::createFromFormat('Y-m-d', $requestContent['effective_date']));
-        $virtualCardRequest->setPurposeDetails($requestContent['reason']);
+        $virtualCardRequest->setHotel($requestContent['booking_details']['hotel']);
+		$virtualCardRequest->setHotelRoom($requestContent['booking_details']['room']);
+		$virtualCardRequest->setTourists($requestContent['booking_details']['tourists']);
+		$virtualCardRequest->setCheckIn(\DateTime::createFromFormat('Y-m-d', $requestContent['booking_details']['check_in']));
+		$virtualCardRequest->setCheckOut(\DateTime::createFromFormat('Y-m-d', $requestContent['booking_details']['check_out']));
         $virtualCardRequest->setUser($this->getUser());
         $isValid = $validator->validate($virtualCardRequest);
 

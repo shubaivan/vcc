@@ -59,13 +59,47 @@ class VirtualCardRequest
      */
     private $user;
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="purpose_details", type="json_array")
-     * @Assert\NotNull()
-     */
-    private $purposeDetails;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="hotel", type="string", length=100)
+	 * @Assert\NotBlank()
+	 */
+    private $hotel;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="hotel_room", type="string", length=100)
+	 * @Assert\NotBlank()
+	 */
+    private $hotelRoom;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="tourists", type="string", length=200)
+	 * @Assert\NotBlank()
+	 */
+    private $tourists;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="check_in", type="date")
+	 * @Assert\NotNull()
+	 * @Assert\Date()
+	 */
+    private $checkIn;
+
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="check_out", type="date")
+	 * @Assert\NotNull()
+	 * @Assert\Date()
+	 */
+    private $checkOut;
 
     /**
      * @var string
@@ -141,37 +175,13 @@ class VirtualCardRequest
     }
 
     /**
-     * Set purposeDetails
-     *
-     * @param array $purposeDetails
-     *
-     * @return VirtualCardRequest
-     */
-    public function setPurposeDetails($purposeDetails)
-    {
-        $this->purposeDetails = $purposeDetails;
-
-        return $this;
-    }
-
-    /**
-     * Get purposeDetails
-     *
-     * @return array
-     */
-    public function getPurposeDetails()
-    {
-        return $this->purposeDetails;
-    }
-
-    /**
      * Set user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param User $user
      *
      * @return VirtualCardRequest
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -235,4 +245,84 @@ class VirtualCardRequest
     {
         $this->providerResponse = $providerResponse;
     }
+
+	/**
+	 * @return string
+	 */
+	public function getHotel()
+	{
+		return $this->hotel;
+	}
+
+	/**
+	 * @param string $hotel
+	 */
+	public function setHotel($hotel)
+	{
+		$this->hotel = $hotel;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getHotelRoom()
+	{
+		return $this->hotelRoom;
+	}
+
+	/**
+	 * @param string $hotelRoom
+	 */
+	public function setHotelRoom($hotelRoom)
+	{
+		$this->hotelRoom = $hotelRoom;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTourists()
+	{
+		return $this->tourists;
+	}
+
+	/**
+	 * @param string $tourists
+	 */
+	public function setTourists($tourists)
+	{
+		$this->tourists = $tourists;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getCheckIn()
+	{
+		return $this->checkIn;
+	}
+
+	/**
+	 * @param \DateTime $checkIn
+	 */
+	public function setCheckIn($checkIn)
+	{
+		$this->checkIn = $checkIn;
+	}
+
+	/**
+	 * @return \DateTime
+	 */
+	public function getCheckOut()
+	{
+		return $this->checkOut;
+	}
+
+	/**
+	 * @param \DateTime $checkOut
+	 */
+	public function setCheckOut($checkOut)
+	{
+		$this->checkOut = $checkOut;
+	}
 }
