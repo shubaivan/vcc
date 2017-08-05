@@ -33,9 +33,9 @@ class ValidatorException extends \Exception implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getErrorsMessage()
+    private function prepareResponseArray()
     {
         $response = [];
 
@@ -48,6 +48,15 @@ class ValidatorException extends \Exception implements \JsonSerializable
             }
         }
 
+        return $response;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorsMessage()
+    {
+        $response = $this->prepareResponseArray();
         if ($response) {
             return $this->implodeArrayError($response);
         }
@@ -84,9 +93,8 @@ class ValidatorException extends \Exception implements \JsonSerializable
 
     public function jsonSerialize()
     {
-        $y = $this->getErrorsMessage();
         return [
-            'errors' => $this->getErrorsMessage()
+            'errors' => $this->prepareResponseArray()
         ];
     }
 }
