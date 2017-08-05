@@ -20,3 +20,14 @@ services:
     AppBundle\Service\CardManager:
         arguments:
             $config: "%card_manager%"
+
+    app_serialize.object_constructor:
+        class: JMS\Serializer\Construction\DoctrineObjectConstructor
+        public: false
+        arguments:
+            - "@doctrine"
+            - "@jms_serializer.unserialize_object_constructor"
+
+    jms_serializer.object_constructor:
+        public: false
+        alias: app_serialize.object_constructor

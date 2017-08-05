@@ -39,6 +39,7 @@ class ApiController extends Controller
         $data['tourists'] = $requestContentParameters->get('tourists');
         $data['check_in'] = \DateTime::createFromFormat('Y-m-d', $requestContentParameters->get('check_in'));
         $data['check_out'] = \DateTime::createFromFormat('Y-m-d', $requestContentParameters->get('check_out'));
+        $data['user'] = $this->getUser();
 
         try {
             // create virtual card request

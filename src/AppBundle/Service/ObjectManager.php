@@ -23,22 +23,10 @@ class ObjectManager
     private $validator;
 
     /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorageInterface;
-
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
      * ObjectManager constructor.
      *
      * @param Serializer            $jmsSerializer
      * @param ValidatorInterface    $validator
-     * @param TokenStorageInterface $tokenStorageInterface
-     * @param EntityManager         $em
      */
     public function __construct(
         Serializer $jmsSerializer,
@@ -48,8 +36,6 @@ class ObjectManager
     ) {
         $this->jmsSerializer = $jmsSerializer;
         $this->validator = $validator;
-        $this->tokenStorageInterface = $tokenStorageInterface;
-        $this->em = $em;
     }
 
     /**
@@ -64,8 +50,6 @@ class ObjectManager
         array $arrayGroup,
         $className
     ) {
-        $currentUser = $this->getTokenStorageInterface()
-            ->getToken()->getUser();
         $jmsSerializer = $this->getSerializer();
 
         try {
@@ -81,13 +65,6 @@ class ObjectManager
             );
         } catch (\Exception $e) {
             throw new DeserializeException($e->getMessage());
-        }
-
-        $metadata = $this->getEntityManager()
-            ->getClassMetadata($className);
-
-        if (isset($metadata->associationMappings['user'])) {
-            $entity->setUser($currentUser);
         }
 
         $this->validateEntity($entity, $arrayGroup);
