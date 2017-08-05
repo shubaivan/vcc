@@ -3,11 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\VirtualCardRequest;
-use AppBundle\Exception\DeserializeException;
 use AppBundle\Exception\ValidatorException;
 use AppBundle\Service\Enett;
-use JMS\Serializer\DeserializationContext;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use AppBundle\Service\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,14 +39,22 @@ class ApiController extends Controller
         $data['tourists'] = $requestContentParameters->get('tourists');
         $data['check_in'] = \DateTime::createFromFormat('Y-m-d', $requestContentParameters->get('check_in'));
         $data['check_out'] = \DateTime::createFromFormat('Y-m-d', $requestContentParameters->get('check_out'));
+
         try {
             // create virtual card request
-            $virtualCardRequest = $this->createEntityByParam($data, [VirtualCardRequest::GROUP_POST]);
+            $objectManager = $objectManager = $this->get(ObjectManager::class);
+            /** @var VirtualCardRequest $virtualCardRequest */
+            $virtualCardRequest = $objectManager->createEntityByParam(
+                $data,
+                [VirtualCardRequest::GROUP_POST],
+                VirtualCardRequest::class
+            );
+
             $em->persist($virtualCardRequest);
             $em->flush();
 
             $cardDetails = $enett->createMultiUseCard($virtualCardRequest);
-            $this->validateEntity($cardDetails, []);
+            $objectManager->validateEntity($cardDetails, []);
             $em->persist($cardDetails);
             $em->flush();
 
@@ -71,6 +77,7 @@ class ApiController extends Controller
 
     /**
      * @param array $array
+     *
      * @return ParameterBag
      */
     private function prepareArray(array $array)
@@ -79,52 +86,7 @@ class ApiController extends Controller
         array_walk_recursive($array, function ($value, $key) use (&$parameters) {
             $parameters->set($key, $value);
         });
-        
+
         return $parameters;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    private function createEntityByParam(array $arrayData, array $arrayGroup)
-    {
-        $jmsSerializer = $this->get('jms_serializer');
-        try {
-            $data = $jmsSerializer->serialize($arrayData, 'json');
-
-            /** @var VirtualCardRequest $entity */
-            $entity = $jmsSerializer->deserialize(
-                $data,
-                VirtualCardRequest::class,
-                'json',
-                DeserializationContext::create()
-                    ->setGroups($arrayGroup)
-            );
-        } catch (\Exception $e) {
-            throw new DeserializeException($e->getMessage());
-        }
-        $entity->setUser($this->getUser());
-        $this->validateEntity($entity, $arrayGroup);
-
-        return $entity;
-    }
-
-    /**
-     * @param object $entity
-     * @param array $validateGroups
-     * @throws ValidatorException
-     */
-    private function validateEntity(
-        $entity,
-        array $validateGroups
-    ) {
-        $validator = $this->get('validator');
-        $validateGroups = $validateGroups ? $validateGroups : null;
-        $errors = $validator->validate($entity, null, $validateGroups);
-        if (count($errors)) {
-            $validatorException = new ValidatorException();
-            $validatorException->addError([$errors]);
-            throw $validatorException;
-        }
     }
 }

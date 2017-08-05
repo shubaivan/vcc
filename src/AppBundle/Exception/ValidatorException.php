@@ -15,10 +15,14 @@ class ValidatorException extends \Exception implements \JsonSerializable
      * @param array           $errors
      * @param string          $message
      * @param int             $code
-     * @param \Exception|null $previous
+     * @param null|\Exception $previous
      */
-    public function __construct(array $errors = [], $message = '', $code = 0, \Exception $previous = null)
-    {
+    public function __construct(
+        array $errors = [],
+        $message = '',
+        $code = 0,
+        \Exception $previous = null
+    ) {
         $this->errorsArray = $errors;
 
         parent::__construct($message, $code, $previous);
@@ -30,25 +34,6 @@ class ValidatorException extends \Exception implements \JsonSerializable
     public function getErrors()
     {
         return $this->errorsArray;
-    }
-
-    /**
-     * @return array
-     */
-    private function prepareResponseArray()
-    {
-        $response = [];
-
-        foreach ($this->errorsArray as $errors) {
-            foreach ($errors as $error) {
-                /** @var ConstraintViolation $viol */
-                foreach ($error as $viol) {
-                    $response [$viol->getPropertyPath()] = $viol->getMessage();
-                }
-            }
-        }
-
-        return $response;
     }
 
     /**
@@ -74,8 +59,35 @@ class ValidatorException extends \Exception implements \JsonSerializable
         $this->errorsArray[] = $message;
     }
 
+    public function jsonSerialize()
+    {
+        return [
+            'errors' => $this->prepareResponseArray(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function prepareResponseArray()
+    {
+        $response = [];
+
+        foreach ($this->errorsArray as $errors) {
+            foreach ($errors as $error) {
+                /** @var ConstraintViolation $viol */
+                foreach ($error as $viol) {
+                    $response[$viol->getPropertyPath()] = $viol->getMessage();
+                }
+            }
+        }
+
+        return $response;
+    }
+
     /**
      * @param array $input
+     *
      * @return string
      */
     private function implodeArrayError(array $input)
@@ -89,12 +101,5 @@ class ValidatorException extends \Exception implements \JsonSerializable
         ));
 
         return $output;
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'errors' => $this->prepareResponseArray()
-        ];
     }
 }
