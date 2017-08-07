@@ -13,14 +13,6 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    AppBundle\Service\:
-        resource: '../../src/AppBundle/Service'
-        public: true
-
-    AppBundle\Service\CardManager:
-        arguments:
-            $config: "%card_manager%"
-
     app_serialize.object_constructor:
         class: JMS\Serializer\Construction\DoctrineObjectConstructor
         public: false

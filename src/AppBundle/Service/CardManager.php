@@ -2,8 +2,6 @@
 
 namespace AppBundle\Service;
 
-use Symfony\Component\DependencyInjection\Container;
-
 class CardManager
 {
     /**
@@ -18,14 +16,21 @@ class CardManager
 
     /**
      * CardManager constructor.
+     *
      * @param array $config
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
         $this->minimalAmount = $config['minimal_amount'];
         $this->fullAmountDaysThreshold = $config['full_amount_days_threshold'];
     }
 
+    /**
+     * @param \DateTime $effectiveDate
+     * @param $amount
+     *
+     * @return int|mixed
+     */
     public function getOnCardAmount(\DateTime $effectiveDate, $amount)
     {
         $interval = new \DateInterval("P{$this->fullAmountDaysThreshold}D");

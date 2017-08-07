@@ -1,0 +1,8 @@
+parameters:
+    app.domain.virtual_cad.class: AppBundle\Domain\VirtualCadDomain
+
+services:
+    app.domain.virtual_cad:
+         class: "%app.domain.virtual_cad.class%"
+         arguments:
+             - "@app.repository.virtual_card"

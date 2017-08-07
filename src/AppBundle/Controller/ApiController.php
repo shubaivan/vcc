@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\VirtualCardRequest;
 use AppBundle\Exception\ValidatorException;
 use AppBundle\Service\Enett;
-use AppBundle\Service\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,7 +26,7 @@ class ApiController extends Controller
 
         $requestContentParameters = $this->prepareArray($requestContent);
 
-        $enett = $this->get(Enett::class);
+        $enett = $this->get('app.service.enett');
         $em = $this->getDoctrine()->getManager();
 
         $data = [];
@@ -43,7 +42,7 @@ class ApiController extends Controller
 
         try {
             // create virtual card request
-            $objectManager = $objectManager = $this->get(ObjectManager::class);
+            $objectManager = $this->get('app.service.object_manager');
             /** @var VirtualCardRequest $virtualCardRequest */
             $virtualCardRequest = $objectManager->createEntityByParam(
                 $data,

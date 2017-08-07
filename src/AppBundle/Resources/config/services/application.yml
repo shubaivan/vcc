@@ -1,0 +1,9 @@
+parameters:
+    app.application.virtual_cad.class: AppBundle\Application\VirtualCadApplication
+
+services:
+    app.application.virtual_cad:
+        class: "%app.application.virtual_cad.class%"
+        arguments:
+            - "@app.domain.virtual_cad"
+            - "@app.service.card_manager"

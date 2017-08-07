@@ -1,0 +1,24 @@
+imports:
+    - { resource: services/application.yml }
+    - { resource: services/domain.yml }
+    - { resource: services/repository.yml }
+parameters:
+    app.service.card_manager.class:                                   AppBundle\Service\CardManager
+    app.service.enett.class:                                          AppBundle\Service\Enett
+    app.service.object_manager.class:                                 AppBundle\Service\ObjectManager
+services:
+    app.service.card_manager:
+        class: "%app.service.card_manager.class%"
+        arguments:
+            $config: "%card_manager%"
+
+    app.service.enett:
+        class: "%app.service.enett.class%"
+        arguments:
+           - "@app.service.card_manager"
+
+    app.service.object_manager:
+        class: "%app.service.object_manager.class%"
+        arguments:
+           - "@jms_serializer"
+           - "@validator"

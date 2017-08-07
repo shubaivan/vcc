@@ -1,0 +1,10 @@
+parameters:
+    app.repository.virtual_card.class: AppBundle\Repository\VirtualCardRepository
+    app.virtual_card.class: AppBundle\Entity\VirtualCard
+
+services:
+    app.repository.virtual_card:
+        class:            "%app.repository.virtual_card.class%"
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - "%app.virtual_card.class%"

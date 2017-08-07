@@ -4,10 +4,8 @@ namespace AppBundle\Service;
 
 use AppBundle\Exception\DeserializeException;
 use AppBundle\Exception\ValidatorException;
-use Doctrine\ORM\EntityManager;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\Serializer;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ObjectManager
@@ -25,14 +23,12 @@ class ObjectManager
     /**
      * ObjectManager constructor.
      *
-     * @param Serializer            $jmsSerializer
-     * @param ValidatorInterface    $validator
+     * @param Serializer         $jmsSerializer
+     * @param ValidatorInterface $validator
      */
     public function __construct(
         Serializer $jmsSerializer,
-        ValidatorInterface $validator,
-        TokenStorageInterface $tokenStorageInterface,
-        EntityManager $em
+        ValidatorInterface $validator
     ) {
         $this->jmsSerializer = $jmsSerializer;
         $this->validator = $validator;
@@ -107,21 +103,5 @@ class ObjectManager
     private function getValidatorInterface()
     {
         return $this->validator;
-    }
-
-    /**
-     * @return TokenStorageInterface
-     */
-    private function getTokenStorageInterface()
-    {
-        return $this->tokenStorageInterface;
-    }
-
-    /**
-     * @return EntityManager
-     */
-    private function getEntityManager()
-    {
-        return $this->em;
     }
 }
